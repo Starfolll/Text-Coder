@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Text Coder</title>
+    <style>
+      p{
+        color: #ED6353;
+        background-color: #F2C975;
+        border-radius: 5px;
+        font-size: 64px;
+        text-align: center;
+        margin: 3px;
+        padding: 10px;
+      }
+      textarea{
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 20px;
+        outline: 0;
+        resize: none;
+        font-size: 24px;
+        border-radius: 5px;
+        border-width: 5px;
+        border-color: #ED6353;
+        background-color: #1C3341;
+        color: #F2C975;
+      }
+      input{
+        color: #1C3341;
+        background-color: #F2C975;
+        outline: 0;
+        width: 100%;
+        text-align: center;
+        border: none;
+        font-size: 42px;
+      }
+      button{
+        outline: 0;
+        font-size: 32px;
+        background-color: #6BB983;
+        border-radius: 5px;
+        border-color: #6BB983;
+        border-width: 5px;
+        color: #1C3341;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px;
+      }
+      div{
+        display: grid;
+        align-content: center;
+      }
+    </style>
+    <script>
+      var I_Key;
+      var B_GenerateKey;
+
+      var B_Code;
+      var B_DeCode;
+
+      var Txt_TTC;
+      var Txt_TTD;
+
+      var Txt_OC;
+      var Txt_OD;
+
+      window.onload = function(){
+        I_Key = document.getElementById('Inp_Key');
+        B_GenerateKey = document.getElementById('Btn_GenerateKey');
+        B_Code = document.getElementById('Btn_Code');
+        B_DeCode = document.getElementById('Btn_Decode');
+
+        Txt_TTC = document.getElementById('TxtArea_TTC');
+        Txt_TTD = document.getElementById('TxtArea_TTD');
+
+        Txt_OC = document.getElementById('TxtArea_OC');
+        Txt_OD = document.getElementById('TxtArea_OD');
+
+        B_GenerateKey.onclick = function(){
+          var Key = "";
+          for(var i = 0; i < 30; i++){
+            Key += ((Math.random()*2)|0) >= 1? (Math.random()*10|0) : (String.fromCharCode((Math.random()*20+65)|0));
+          }
+          I_Key.value = Key;
+        }
+        B_Code.onclick = function(){
+          var txt = Txt_TTC.value;
+          var key = I_Key.value;
+          var keyLength = key.length;
+
+          var KodedTxt = "";
+          for(var j = 0; j < txt.length; j++){
+            KodedTxt += (String.fromCharCode(txt[j].charCodeAt(0) + key[j%keyLength].charCodeAt(0)));
+          }
+          Txt_OC.value = KodedTxt;
+        }
+        B_DeCode.onclick = function(){
+          var txt = Txt_TTD.value;
+          var key = I_Key.value;
+          var keyLength = key.length;
+
+          var Dtxt = "";
+          for(var k = 0; k < txt.length; k++){
+            Dtxt += (String.fromCharCode((txt[k].charCodeAt(0)) - (key[k%keyLength].charCodeAt(0))));
+          }
+          Txt_OD.value = Dtxt;
+        }
+      }
+    </script>
+  </head>
+  <body style="font-family: verdana; background-color: #1C3341;">
+    <div style="justify-content: center;">
+      <p><u>Text Coder</u></p>
+    </div>
+
+    <div style="justify-content: inherit;">
+      <button id="Btn_GenerateKey">Generate Key</button>
+      <input id="Inp_Key" type="text" value="Key">
+    </div>
+
+    <div style="justify-content: inherit;">
+      <button style="grid-area: 1/1" id="Btn_Code" type="button" style="grid-area: 1/1">Code</button>
+      <button style="grid-area: 1/2" id="Btn_Decode" type="button" style="grid-area: 1/2">Decode</button><br>
+
+      <textarea style="grid-area: 2/1" id="TxtArea_TTC" rows="13" cols="40">Your text to code: </textarea>
+      <textarea style="grid-area: 2/2" id="TxtArea_TTD" rows="13" cols="40">Your text to decode: </textarea><br>
+
+      <textarea style="grid-area: 3/1" id="TxtArea_OC" rows="13" cols="40">Output coded text: </textarea>
+      <textarea style="grid-area: 3/2" id="TxtArea_OD" rows="13" cols="40">Output decoded text: </textarea>
+    </div>
+  </body>
+</html>
